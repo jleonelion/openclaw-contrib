@@ -172,6 +172,46 @@ describe("memory dreaming host helpers", () => {
     ]);
   });
 
+  it("excludes agents that opt out of dreaming via dreaming.enabled=false", () => {
+    const cfg = {
+      agents: {
+        list: [
+          { id: "alpha", workspace: "/workspace/alpha", dreaming: { enabled: false } },
+          { id: "beta", workspace: "/workspace/beta" },
+        ],
+      },
+    } as OpenClawConfig;
+
+    expect(resolveMemoryDreamingWorkspaces(cfg)).toEqual([
+      {
+        workspaceDir: "/workspace/beta",
+        agentIds: ["beta"],
+      },
+    ]);
+  });
+
+  it("includes agents with dreaming.enabled=true or unset (backwards compatible)", () => {
+    const cfg = {
+      agents: {
+        list: [
+          { id: "alpha", workspace: "/workspace/alpha", dreaming: { enabled: true } },
+          { id: "beta", workspace: "/workspace/beta" },
+        ],
+      },
+    } as OpenClawConfig;
+
+    expect(resolveMemoryDreamingWorkspaces(cfg)).toEqual([
+      {
+        workspaceDir: "/workspace/alpha",
+        agentIds: ["alpha"],
+      },
+      {
+        workspaceDir: "/workspace/beta",
+        agentIds: ["beta"],
+      },
+    ]);
+  });
+
   it("includes the runtime primary workspace alongside configured subagent workspaces", () => {
     const cfg = {
       agents: {

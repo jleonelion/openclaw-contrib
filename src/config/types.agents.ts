@@ -141,6 +141,8 @@ export type AgentConfig = {
     /** Require explicit agentId in sessions_spawn (no default same-as-caller). */
     requireAgentId?: boolean;
   };
+  /** Optional per-agent opt-out from nightly memory "dreaming". Omitted or true preserves default behavior. */
+  dreaming?: { enabled?: boolean };
   /** Optional outer run loop retry boundaries. */
   runRetries?: AgentDefaultsConfig["runRetries"];
   /** Optional per-agent embedded OpenClaw overrides. */

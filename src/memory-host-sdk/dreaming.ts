@@ -631,6 +631,9 @@ export function resolveMemoryDreamingWorkspaces(
       continue;
     }
     seenAgents.add(id);
+    if (entry.dreaming?.enabled === false) {
+      continue;
+    }
     agentIds.push(id);
   }
   if (agentIds.length === 0) {

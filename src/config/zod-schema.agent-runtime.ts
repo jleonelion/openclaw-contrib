@@ -1086,6 +1086,12 @@ export const AgentEntrySchema = z
       })
       .strict()
       .optional(),
+    dreaming: z
+      .object({
+        enabled: z.boolean().optional(),
+      })
+      .strict()
+      .optional(),
     runRetries: AgentRunRetriesConfigSchema.optional(),
     embeddedAgent: AgentEntryEmbeddedAgentConfigSchema.optional(),
     sandbox: AgentSandboxSchema,
